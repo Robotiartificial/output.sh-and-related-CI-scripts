@@ -21,3 +21,30 @@
       - run: yarn compile
       - run: yarn test
       - run: yarn check-compile-outpu
+
+
+    "compile": "waffle .waffle.json",
+    "pretest": "yarn compile",
+    "test": "mocha",
+    "check-compile-output": "./scripts/check-compile-output.sh",
+    "prepublishOnly": "yarn test"
+  },
+  "license": "GPL-3.0-or-later"
+}
+
+
+#!/bin/bash
+
+# Checks that there are no uncommitted files in the repo.
+if [[ -z $(git status -s) ]]
+then
+    exit 0
+else
+    echo "There are uncommitted file changes!"
+    echo "The committed build artifacts likely do not match the source code."
+    exit 1
+fi
+0 comments on commit 1d9785e
+
+
+
